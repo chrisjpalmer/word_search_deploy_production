@@ -1,0 +1,71 @@
+version: '3.3'
+services:
+  word_search_system:
+    image: chrisjpalmer/word_search_system:1.0.0
+    networks:
+      - home-net
+    ports:
+      - "50051:50051"
+    configs:
+      - source: word_search_system.config.json
+        target: config.json
+    command: ["app","--config=/config.json"]
+    deploy:
+      mode: replicated
+      replicas: 1
+     # service restart policy
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      # service update configuration
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: continue
+        monitor: 60s
+        max_failure_ratio: 0.3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+  word_search_api:
+    image: chrisjpalmer/word_search_api:1.0.0
+    networks:
+      - home-net
+    ports:
+      - "80:8080"
+    configs:
+      - source: word_search_api.config.json
+        target: config.json
+    command: ["app","--config=/config.json"]
+    deploy:
+      mode: replicated
+      replicas: 1
+     # service restart policy
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      # service update configuration
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: continue
+        monitor: 60s
+        max_failure_ratio: 0.3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+networks:
+  home-net:
+configs:
+  word_search_system.config.json:
+    file: word_search_system.config.json
+  word_search_api.config.json:
+    file: word_search_api.config.json
