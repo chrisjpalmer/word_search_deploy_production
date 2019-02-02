@@ -32,7 +32,7 @@ services:
         max-size: "200k"
         max-file: "10"
   word_search_api:
-    image: chrisjpalmer/word_search_api:1.1.0
+    image: chrisjpalmer/word_search_api:1.2.0
     networks:
       - home-net
     ports:
