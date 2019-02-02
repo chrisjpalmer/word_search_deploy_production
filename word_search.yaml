@@ -32,11 +32,11 @@ services:
         max-size: "200k"
         max-file: "10"
   word_search_api:
-    image: chrisjpalmer/word_search_api:1.0.0
+    image: chrisjpalmer/word_search_api:1.1.0
     networks:
       - home-net
     ports:
-      - "80:8080"
+      - "80:80"
     configs:
       - source: word_search_api.config.json
         target: config.json

@@ -1,3 +1,4 @@
 {
-    "wordSearchSystemAddress":"word_search_system:50051"
+    "wordSearchSystemAddress":"word_search_system:50051",
+    "httpListenAddress":":80"
 }
